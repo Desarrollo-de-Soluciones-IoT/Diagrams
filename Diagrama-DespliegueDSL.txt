@@ -1,0 +1,70 @@
+workspace "Microsoft Azure" "Azure deployment architecture." {
+
+    model {
+        DocSeeker = softwaresystem "DocSeeker" "Almacena información sobre los profesionales médicos y pacientes." "Spring Boot Application" {
+            webApplication = container "Web Application" "Permite ver a los empleados ver y administrar información sobre los profesionales médicos, pacientes y medicina." "Java and Spring Boot"
+            database = container "Database" "Almacena información sobre los profesionales médicos, pacientes y medicina." "Azure SQL Database"
+        }
+
+        webApplication -> database "Reads from and writes to" "MySQL Protocol/SSL"
+
+        live = deploymentEnvironment "Live" {
+
+            deploymentNode "Microsoft Azure" {
+                tags "Microsoft Azure - Cloud"
+
+                region = deploymentNode "East US" {
+                    tags "Microsoft Azure - Region"
+
+                    dns = infrastructureNode "Azure DNS" {
+                        tags "Microsoft Azure - DNS"
+                    }
+
+                    appService = deploymentNode "Azure App Service" {
+                        tags "Microsoft Azure - App Service"
+
+                        webApplicationInstance = containerInstance webApplication
+                    }
+
+                    sqlServer = deploymentNode "Azure SQL Database" {
+                        tags "Microsoft Azure - SQL Database"
+
+                        databaseInstance = containerInstance database
+                    }
+                }
+            }
+
+            dns -> appService "Forwards requests to" "HTTPS"
+        }
+    }
+         
+    views {
+        deployment DocSeeker "Live" "AzureDeployment" {
+            include *
+            autolayout lr
+
+            animation {
+                dns
+                appService
+                webApplicationInstance
+                databaseInstance
+            }
+        }
+
+        styles {
+            element "Element" {
+                shape roundedbox
+                background #ffffff
+            }
+            element "Database" {
+                shape cylinder
+            }
+            element "Infrastructure Node" {
+                shape roundedbox
+            }
+        }
+
+        themes https://static.structurizr.com/themes/amazon-web-services-2020.04.30/theme.json
+    }
+
+}

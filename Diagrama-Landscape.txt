@@ -1,0 +1,64 @@
+workspace {
+
+    !impliedRelationships "false" 
+    !identifiers "hierarchical" 
+
+    model {
+        customer = person "Paciente" "Persona que necesiten atención médico." "Customer"
+        customer2 = person "Profesional de salud" "Persona profesional de salud." "Customer"
+        customer3 = person "Soporte técnico" "Persona que Diagnóstico y solución de problemas técnicos en el BC." "Customer"
+        
+        group "DocSeeker" {
+           
+
+            payment = softwaresystem "Payment System" "Sistema de pago vía tarjeta de crédito/débito para recibir o transferir pagos." "Existing System"
+            email = softwaresystem "E-mail System" "Mensajería electrónica mediante SMTP." "Existing System"
+            alertas = softwaresystem "Email Notificacion System" "Manda notificaciones inmediatas en caso de que se registren temperaturas anormales o fuera de un rango predefinido." "Existing System"
+            atencionClient = person "Atención al cliente" "Atención al cliente ante fallo de mensajería (e-mails)" 
+            docseekerApplication = softwaresystem "DocSeeker Application" "Aplicación que ofrece cubrir las necesidades básicas de atención médica a domicilio."
+        }
+
+
+        customer -> docseekerApplication "Ingresa para buscar servicios de atención médica y comenzar a usar la aplicación web y mobile"
+        customer2 -> docseekerApplication "Ingresa para registrarse y usar la aplicación web y mobile"
+        customer3 -> docseekerApplication "Ingresa para el monitoreo y mantenimiento del software y hardware utilizados en el BC"
+        docseekerApplication -> payment "Gets account information from, and makes payments using"
+        docseekerApplication -> email "Sends e-mail using"
+        email -> atencionClient "Usa"
+        email -> alertas "Usa"
+        alertas -> customer2 "Manda e-mail con datos de temperatura del paciente"
+        customer ->  atencionClient "Pregunta a"
+        customer2 ->  atencionClient "Pregunta a"
+    }
+    
+
+    
+   views {
+       systemlandscape "SystemLandscape" {
+            include *
+
+        }
+       styles {
+            element "Person" {
+                color #ffffff
+                fontSize 22
+                shape Person
+            }
+            element "Customer" {
+                background #08427b
+            }
+            element "Bank Staff" {
+                background #999999
+            }
+            element "Software System" {
+                background #1168bd
+                color #ffffff
+            }
+            element "Existing System" {
+                background #999999
+                color #ffffff
+            }
+
+ }
+}
+}

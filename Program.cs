@@ -63,10 +63,9 @@ namespace c4_model_design
             Container webApplication = DocSeeker.AddContainer("Web App", "Permite a los usuarios interactuar con la UI y sus funcionalidades.", "Angular");
             Container landingPage = DocSeeker.AddContainer("Landing Page", "Permite a los usuarios de la aplicación interactuar con el landing, además de servir como una herramienta de marketing.", "HTML");
             Container apiRest = DocSeeker.AddContainer("API Gateway", "API Gateway", "SprintBoot port 8080");
-            //////
-            //Container PaymentContext = DocSeeker.AddContainer("Payment Bounded Context", "Bounded Context donde se realiza el método de pago.", "SprintBoot");
+
             Container MedicalAppointment = DocSeeker.AddContainer("Medical Appointment Bounded Context", "Bounded Context donde se enfoca en las citas solicitadas.", "SprintBoot");
-            Container SecurityContext = DocSeeker.AddContainer("Security Bounded Context", "Bounded Context donde se manejan los servicios de verificación de cuentas de usuarios.", "SprintBoot");
+            //Container SecurityContext = DocSeeker.AddContainer("Security Bounded Context", "Bounded Context donde se manejan los servicios de verificación de cuentas de usuarios.", "SprintBoot");
             Container AuthenticationContext = DocSeeker.AddContainer("Authentication Bounded Context", "Bounded Context donde se manejan los servicios relacionados a la autenticación.", "SprintBoot");
             Container MessageContext = DocSeeker.AddContainer("Message Bounded Context", "Bounded Context donde se utilizará para gesitionar el sistema de mensajeria.", "SprintBoot");
             Container NotificationContext = DocSeeker.AddContainer("Temperature Notification Bounded Context", "Bounded Context donde se utilizará para medir la temperatura.", "SprintBoot");
@@ -90,17 +89,15 @@ namespace c4_model_design
             mobileApplication.Uses(apiRest, "API Request", "JSON/HTTPS");
             webApplication.Uses(apiRest, "API Request", "JSON/HTTPS");
 
-            //apiRest.Uses(PaymentContext, "", "");
             apiRest.Uses(MedicalAppointment, "", "");
             apiRest.Uses(AuthenticationContext, "", "");
-            apiRest.Uses(SecurityContext, "", "");
+            //apiRest.Uses(SecurityContext, "", "");
             apiRest.Uses(MessageContext, "", "");
             apiRest.Uses(NotificationContext, "", "");
             apiRest.Uses(ProfileContext, "", "");
 
-            //PaymentContext.Uses(database, "", "JDBC");
             MedicalAppointment.Uses(Broker, "", "JDBC");
-            SecurityContext.Uses(Broker, "", "JDB");
+            //SecurityContext.Uses(Broker, "", "JDB");
             MessageContext.Uses(Broker, "", "JDBC");
             NotificationContext.Uses(Broker, "", "JDBC");
             AuthenticationContext.Uses(Broker, "", "JDBC");
@@ -108,7 +105,7 @@ namespace c4_model_design
             Broker.Uses(database, "", "JDBC");
 
             AuthenticationContext.Uses(Payment, "API Request", "JSON/HTTPS");
-            SecurityContext.Uses(Google, "API Request", "JSON/HTTPS");
+            //SecurityContext.Uses(Google, "API Request", "JSON/HTTPS");
 
             // Tags
             mobileApplication.AddTags("MobileApp");
@@ -117,7 +114,7 @@ namespace c4_model_design
             apiRest.AddTags("APIRest");
             database.AddTags("Database");
             MedicalAppointment.AddTags("MedicalAppointment");
-            SecurityContext.AddTags("SecurityContext");
+            //SecurityContext.AddTags("SecurityContext");
             AuthenticationContext.AddTags("AuthenticationContext");
             MessageContext.AddTags("MessageContext");
             NotificationContext.AddTags("NotificationContext");
@@ -133,7 +130,7 @@ namespace c4_model_design
             styles.Add(new ElementStyle("ReservationContext") { Shape = Shape.Hexagon, Background = "#facc2e", Icon = "" });
             styles.Add(new ElementStyle("ServiceContext") { Shape = Shape.Hexagon, Background = "#facc2e", Icon = "" });
             styles.Add(new ElementStyle("MedicalAppointment") { Shape = Shape.Hexagon, Background = "#facc2e", Icon = "" });
-            styles.Add(new ElementStyle("SecurityContext") { Shape = Shape.Hexagon, Background = "#facc2e", Icon = "" });
+            //styles.Add(new ElementStyle("SecurityContext") { Shape = Shape.Hexagon, Background = "#facc2e", Icon = "" });
             styles.Add(new ElementStyle("AuthenticationContext") { Shape = Shape.Hexagon, Background = "#facc2e", Icon = "" });
             styles.Add(new ElementStyle("MessageContext") { Shape = Shape.Hexagon, Background = "#facc2e", Icon = "" });
             styles.Add(new ElementStyle("ProfileContext") { Shape = Shape.Hexagon, Background = "#facc2e", Icon = "" });
