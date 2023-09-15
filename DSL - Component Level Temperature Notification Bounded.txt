@@ -1,0 +1,35 @@
+workspace {
+    model {
+        database = softwaresystem "DB" "Base de datos donde se almacena los datos recopilados" "DataBase"
+
+     group "DocSeeker" {
+           
+
+            interface = softwaresystem "Interface Layer Temperature Notification " "[Component: NodeJS (NestJS)]" "Existing System"
+            application = softwaresystem "Application Layer Temperature Notification " "[Component: NodeJS (NestJS)]" "Existing System"
+            infrastructure = softwaresystem "Infrastructure Layer Temperature Notification " "[Component: NodeJS (NestJS)]" "Existing System"
+            domain = softwaresystem "Domain Layer Temperature Notification " "[Component: NodeJS (NestJS)]" 
+           
+        }
+   
+    
+    interface -> application 
+    application -> infrastructure 
+    application -> domain 
+    infrastructure -> domain 
+    infrastructure -> database
+  }
+
+    views {
+        systemlandscape "ComponentLevel" {
+            include *
+            autolayout lr
+        }
+        styles {
+            element "Database" {
+                background #1168bd
+                color #ffffff
+
+        }
+    }
+}
